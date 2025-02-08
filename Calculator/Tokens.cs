@@ -8,6 +8,8 @@ public enum TokenType
     BracketOpen,
     BracketClose,
     BinaryOperation,
+    Identifier,
+    Comma
 }
 
 public static class Tokens
@@ -18,5 +20,7 @@ public static class Tokens
         { TokenType.BinaryOperation, @"\*\*|[+\-*/%]"},
         { TokenType.BracketOpen, @"\("},
         { TokenType.BracketClose, @"\)"},
+        { TokenType.Identifier, @"\b[a-zA-Z_][a-zA-Z0-9_]*"},
+        { TokenType.Comma, @"," }
     };
 }

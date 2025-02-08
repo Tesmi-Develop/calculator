@@ -4,7 +4,7 @@ public static class Program
 {
     public static void Main()
     {
-        var input = "12 * (3.5 * (8 - (2 / 4) * 3))"; // 273
+        var input = "log(2 * 2, 2 * cos(0)) * (3.5 * (8 - (2 / 4) * 3))";
 
         try
         {

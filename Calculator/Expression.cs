@@ -4,23 +4,27 @@ namespace Calculator;
 
 public abstract class Expression
 {
-    private static List<Expression> _expressions;
+    private static readonly List<Expression> Expressions = [];
     
     static Expression()
     {
-        _expressions =
-        (
-            from assembly in AppDomain.CurrentDomain.GetAssemblies()
-            from type in assembly.GetTypes()
-            where Attribute.IsDefined(type, typeof(ExpressionAttribute))
-            select (Expression)type.GetConstructors()[0].Invoke(null)!
-        ).ToList();
-
+        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            foreach (var type in assembly.GetTypes())
+            {
+                if (Attribute.IsDefined(type, typeof(ExpressionAttribute)))
+                {
+                    if (type.IsAbstract)
+                        continue;
+                    Expressions.Add((Expression)type.GetConstructors()[0].Invoke(null)!);
+                }
+            }
+        }
     }
 
     public static Expression FindExpression(Token token)
     {
-        foreach (var expression in _expressions)
+        foreach (var expression in Expressions)
         {
             if (expression.IsValidToken(token))
             {
