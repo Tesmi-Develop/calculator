@@ -10,7 +10,9 @@ public enum BinaryOperationPriority
 public abstract class BinaryOperationExpression : Expression
 {
     public abstract BinaryOperationPriority Priority { get; }
+    
     protected abstract bool _IsValidToken(Token token);
+    
     protected override bool IsValidToken(Token token)
     {
         if (token.Type != TokenType.BinaryOperation)
@@ -18,4 +20,6 @@ public abstract class BinaryOperationExpression : Expression
 
         return _IsValidToken(token);
     }
+    
+    public abstract double Compute(NumericalExpression left, NumericalExpression right);
 }

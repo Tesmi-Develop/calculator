@@ -4,6 +4,7 @@ namespace Calculator.Expressions;
 public class GroupExpression : NumericalExpression
 {
     private List<Expression> _expressions = null!;
+    
     protected override bool IsValidToken(Token token)
     {
         return token.Type == TokenType.BracketOpen;
@@ -19,6 +20,7 @@ public class GroupExpression : NumericalExpression
             var token = tokens[startPosition];
             var expression = Expression.FindExpression(token);
             var oldIndex = startPosition;
+            
             expression.Compile(tokens, ref startPosition);
             _expressions.Add(expression);
             
@@ -31,6 +33,7 @@ public class GroupExpression : NumericalExpression
 
     public override double Compute()
     {
-        return 0;
+        var compiler = new CalculatorCompiler();
+        return compiler.Compute(_expressions);
     }
 }

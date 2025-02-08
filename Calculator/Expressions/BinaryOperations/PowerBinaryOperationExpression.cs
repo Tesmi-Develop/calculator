@@ -1,7 +1,7 @@
 namespace Calculator.Expressions.BinaryOperations;
 
 [Expression]
-public class MultiplyBinaryOperationExpression : BinaryOperationExpression
+public class PowerBinaryOperationExpression : BinaryOperationExpression
 {
     public override BinaryOperationPriority Priority => BinaryOperationPriority.Middle;
     
@@ -9,11 +9,12 @@ public class MultiplyBinaryOperationExpression : BinaryOperationExpression
 
     protected override bool _IsValidToken(Token token)
     {
-        return token.Value == "*";
+        return token.Value == "**";
     }
 
     public override double Compute(NumericalExpression left, NumericalExpression right)
     {
-        return left.Compute() * right.Compute();
+        return Math.Pow(left.Compute(), right.Compute());
     }
 }
+

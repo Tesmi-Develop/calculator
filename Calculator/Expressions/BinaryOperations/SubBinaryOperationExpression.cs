@@ -11,4 +11,9 @@ public class SubBinaryOperationExpression : BinaryOperationExpression
     {
         return token.Value == "-";
     }
+
+    public override double Compute(NumericalExpression left, NumericalExpression right)
+    {
+        return left.Compute() - right.Compute();
+    }
 }

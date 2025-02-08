@@ -1,3 +1,6 @@
+using System.Linq.Expressions;
+using Calculator.Expressions;
+
 namespace Calculator;
 
 public class CalculatorCompiler
@@ -21,19 +24,14 @@ public class CalculatorCompiler
         if (depth != 0)
             throw new InvalidOperationException("Invalid brackets");
     }
-
-    public List<Expression> Compile(List<Token> tokens)
-    {
-        return Compile(tokens, 0, tokens.Count);
-    }
     
-    public List<Expression> Compile(List<Token> tokens, int start, int end)
+    public List<Expression> Compile(List<Token> tokens)
     {
         ValidateTokens(tokens);
         var expressions = new List<Expression>();
-        var index = start;
+        var index = 0;
         
-        while (index < end)
+        while (index < tokens.Count)
         {
             var token = tokens[index];
             var expression = Expression.FindExpression(token);
@@ -47,8 +45,56 @@ public class CalculatorCompiler
         
         return expressions;
     }
+
+    private int FindHighestBinaryOperation(List<Expression> expressions)
+    {
+        var result = -1;
+        var priority = BinaryOperationPriority.Lowest;
+        
+        for (var i = 0; i < expressions.Count; i++)
+        {
+            var expression = expressions[i];
+            if (!(expression is BinaryOperationExpression))
+                continue;
+            
+            var operation = (BinaryOperationExpression)expression;
+            if (operation.Priority <= priority && result != -1)
+                continue;
+            
+            result = i;
+            priority = operation.Priority;
+            
+            if (operation.Priority == BinaryOperationPriority.Highest)
+                break;
+        }
+
+        return result;
+    }
     
-     
-    
-    public void Run() {}
+    public double Compute(List<Expression> expressions)
+    {
+        while (expressions.Count > 1)
+        {
+            var expressionIndex = FindHighestBinaryOperation(expressions);
+            
+            if (expressionIndex == -1 
+                || expressions[expressionIndex - 1] is not NumericalExpression 
+                || expressions[expressionIndex + 1] is not NumericalExpression)
+                throw new InvalidOperationException("Invalid expression");
+            
+            var expression = (BinaryOperationExpression)expressions[expressionIndex];
+            var leftExpression = (NumericalExpression)expressions[expressionIndex - 1];
+            var rightExpression = (NumericalExpression)expressions[expressionIndex + 1];
+            
+            var result = expression.Compute(leftExpression, rightExpression);
+            var wrappedResult = new NumericalExpression();
+            wrappedResult.Compile(result);
+            
+            expressions[expressionIndex] = wrappedResult;
+            expressions.RemoveAt(expressionIndex + 1);
+            expressions.RemoveAt(expressionIndex - 1);
+        }
+
+        return ((NumericalExpression)expressions[0]).Compute();
+    }
 }
