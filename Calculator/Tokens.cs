@@ -7,15 +7,15 @@ public enum TokenType
     Number,
     BracketOpen,
     BracketClose,
-    Operation,
+    BinaryOperation,
 }
 
 public static class Tokens
 {
-    public static Dictionary<TokenType, string> TokenRegexs = new()
+    public static readonly Dictionary<TokenType, string> TokenRegexs = new()
     {
         { TokenType.Number, @"-?\d+(\.\d+)?"},
-        { TokenType.Operation, @"[+\-*/%^]"},
+        { TokenType.BinaryOperation, @"\*\*|[+\-*/%]"},
         { TokenType.BracketOpen, @"\("},
         { TokenType.BracketClose, @"\)"},
     };

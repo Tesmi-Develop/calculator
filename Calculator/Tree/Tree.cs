@@ -2,7 +2,9 @@ namespace Calculator;
 
 public class Tree
 {
-    public readonly Node Root;
+    public Node Root { get; private set; }
+    
+    public Tree() {}
 
     public Tree(Node root)
     {
@@ -27,11 +29,17 @@ public class Tree
     
     public Node CloneRoot()
     {
+        if (Root == null)
+            throw new Exception("Tree is empty");
+        
         return CloneNode(Root, null)!;
     }
 
     private Node GetFreeNode(Node root)
     {
+        if (Root == null)
+            throw new Exception("Tree is empty");
+        
         if (root.LeftChild is null || root.RightChild is null)
             return root;
 
@@ -45,6 +53,9 @@ public class Tree
 
     public void Add(Node newNode)
     {
+        if (Root == null)
+            throw new Exception("Tree is empty");
+        
         if (newNode.LeftChild is null && newNode.RightChild != null)
             throw new ArgumentException("A node cannot have a right child without a left child");
         
@@ -58,6 +69,13 @@ public class Tree
         }
         
         foundNode.RightChild = newNode;
+    }
+
+    public void Init(Node root)
+    {
+        if (Root != null)
+            throw new Exception("Tree is already initialized");
+        Root = root;
     }
 
     public void Add(Tree tree)

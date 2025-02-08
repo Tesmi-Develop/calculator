@@ -2,21 +2,21 @@ namespace Calculator;
 
 public class Node
 {
-    public Operation Operation;
+    public Expression Expression;
     public Node? Parent;
     public Node? LeftChild;
     public Node? RightChild;
 
-    public Node(Operation operation, Node? leftChild, Node? rightChild)
+    public Node(Expression? expression, Node? leftChild, Node? rightChild)
     {
-        Operation = operation;
+        Expression = expression;
         LeftChild = leftChild;
         RightChild = rightChild;
     }
     
-    public Node(Operation operation, Node? parent, Node? leftChild, Node? rightChild)
+    public Node(Expression? expression, Node? parent, Node? leftChild, Node? rightChild)
     {
-        Operation = operation;
+        Expression = expression;
         Parent = parent;
         LeftChild = leftChild;
         RightChild = rightChild;
@@ -24,6 +24,6 @@ public class Node
 
     public Node Clone()
     {
-        return new Node(Operation, Parent, LeftChild, RightChild);
+        return new Node(Expression, Parent, LeftChild, RightChild);
     }
 }

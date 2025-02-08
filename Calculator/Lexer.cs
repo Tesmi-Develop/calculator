@@ -15,7 +15,7 @@ public class Lexer
             finalPattern += $"{pattern}|";
         }
         
-        _regex = new Regex(finalPattern.Substring(0, finalPattern.Length - 1));
+        _regex = new Regex(finalPattern[..^1]);
     }
     
     public List<Token> Parse(string input)
@@ -28,11 +28,11 @@ public class Lexer
             
             foreach (var (tokenType, tokenPattern) in Tokens.TokenRegexs)
             {
-                if (Regex.IsMatch(match.Value, $"^{tokenPattern}$"))
-                {
-                    foundTokenType = tokenType;
-                    break;
-                }
+                if (!Regex.IsMatch(match.Value, $"^{tokenPattern}$")) 
+                    continue;
+                
+                foundTokenType = tokenType;
+                break;
             }
             
             if (foundTokenType is null)
