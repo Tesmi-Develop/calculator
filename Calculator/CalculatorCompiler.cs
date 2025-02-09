@@ -97,6 +97,6 @@ public class CalculatorCompiler
             expressions.RemoveAt(expressionIndex - 1);
         }
 
-        return ((NumericalExpression)expressions[0]).Compute();
+        return expressions.Count == 1 ? ((NumericalExpression)expressions[0]).Compute() : 0;
     }
 }
