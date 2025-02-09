@@ -8,7 +8,7 @@ public class Lexer
 
     public Lexer()
     {
-        var finalPattern = @"\b";
+        var finalPattern = string.Empty;
 
         foreach (var (tokenType, pattern) in Tokens.TokenRegexs)
         {

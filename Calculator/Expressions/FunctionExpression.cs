@@ -7,7 +7,7 @@ public abstract class FunctionExpression : NumericalExpression
     
     protected abstract bool IsValidToken(string identifier);
     
-    protected override bool IsValidToken(Token token)
+    protected override bool IsValidToken(Token token, List<Expression> expression)
     {
         if (token.Type != TokenType.Identifier)
             return false;
@@ -15,7 +15,7 @@ public abstract class FunctionExpression : NumericalExpression
         return IsValidToken(token.Value);
     }
     
-    public override void Compile(List<Token> tokens, ref int startPosition)
+    public override void Compile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
     {
         name = tokens[startPosition].Value;
         
@@ -29,12 +29,13 @@ public abstract class FunctionExpression : NumericalExpression
         while (tokens[startPosition].Type != TokenType.BracketClose)
         {
             var token = tokens[startPosition];
-            var expression = Expression.FindExpression(token);
+            var expression = Expression.FindExpression(token, argument);
             var oldIndex = startPosition;
             
-            expression.Compile(tokens, ref startPosition);
-            argument.Add(expression);
-            
+            expression?.Compile(tokens, ref startPosition, expressions);
+            if (expression != null) 
+                argument.Add(expression);
+
             if (startPosition == oldIndex)
                 startPosition++;
 

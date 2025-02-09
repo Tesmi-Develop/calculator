@@ -5,9 +5,9 @@ public class PowerBinaryOperationExpression : BinaryOperationExpression
 {
     public override BinaryOperationPriority Priority => BinaryOperationPriority.Middle;
     
-    public override void Compile(List<Token> tokens, ref int startPosition) {}
+    public override void Compile(List<Token> tokens, ref int startPosition, List<Expression> expressions) {}
 
-    protected override bool _IsValidToken(Token token)
+    protected override bool _IsValidToken(Token token, List<Expression> expressions)
     {
         return token.Value == "**";
     }

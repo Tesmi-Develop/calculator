@@ -22,21 +22,21 @@ public abstract class Expression
         }
     }
 
-    public static Expression FindExpression(Token token)
+    public static Expression? FindExpression(Token token, List<Expression> expressions)
     {
         foreach (var expression in Expressions)
         {
-            if (expression.IsValidToken(token))
+            if (expression.IsValidToken(token, expressions))
             {
                 var newExpression = (Expression)expression.GetType().GetConstructors()[0].Invoke(null);
                 return newExpression;
             }
         }
-        
-        throw new InvalidExpressionException($"Expression {token.Value} not found");
+
+        return null;
     }
 
-    protected abstract bool IsValidToken(Token token);
+    protected abstract bool IsValidToken(Token token, List<Expression> expressions);
 
-    public abstract void Compile(List<Token> tokens, ref int startPosition);
+    public abstract void Compile(List<Token> tokens, ref int startPosition, List<Expression> expressions);
 }

@@ -16,7 +16,7 @@ public static class Tokens
 {
     public static readonly Dictionary<TokenType, string> TokenRegexs = new()
     {
-        { TokenType.Number, @"-?\d+(\.\d+)?"},
+        { TokenType.Number, @"\d+(\.\d+)?"},
         { TokenType.BinaryOperation, @"\*\*|[+\-*/%]"},
         { TokenType.BracketOpen, @"\("},
         { TokenType.BracketClose, @"\)"},

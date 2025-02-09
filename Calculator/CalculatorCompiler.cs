@@ -34,11 +34,13 @@ public class CalculatorCompiler
         while (index < tokens.Count)
         {
             var token = tokens[index];
-            var expression = Expression.FindExpression(token);
+            var expression = Expression.FindExpression(token, expressions);
             var oldIndex = index;
-            expression.Compile(tokens, ref index);
-            expressions.Add(expression);
             
+            expression?.Compile(tokens, ref index, expressions);
+            if (expression != null) 
+                expressions.Add(expression);
+
             if (index == oldIndex)
                 index++;
         }
