@@ -3,20 +3,19 @@ using System.Globalization;
 namespace Calculator.Expressions;
 
 [Expression]
-public class NumericalExpression : Expression
+public abstract class ConstantExpression : NumericalExpression
 {
-    private Token _token;
-    private double? _value;
+    private int _unaryOperator = 1;
+    protected abstract string Name { get; }
+    protected abstract double Value { get; }
     
     protected override bool IsValidToken(Token token, List<Expression> expression)
     {
-        return token.Type == TokenType.Number;
+        return token.Type == TokenType.Identifier && token.Value.ToLower() == Name;
     }
 
     public override void Compile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
     {
-        _token = tokens[startPosition];
-
         if (tokens.Count > 1 && 
             startPosition > 0 && 
             tokens[startPosition - 1].Type == TokenType.BinaryOperation && 
@@ -29,17 +28,14 @@ public class NumericalExpression : Expression
             {
                 var prevToken = tokens[startPosition - 1];
                 expressions.RemoveAt(expressions.Count - 1);
-                _token = new Token(TokenType.Identifier, $"{prevToken.Value}{_token.Value}");
+                _unaryOperator = prevToken.Value == "+" ? 1 : -1;
             }
     }
 
-    public virtual void Compile(double number)
-    {
-        _value = number;
-    }
+    public override void Compile(double number) {}
 
-    public virtual double Compute()
+    public override double Compute()
     {
-        return _value ?? double.Parse(_token.Value, CultureInfo.InvariantCulture);
+        return Value * _unaryOperator;
     }
 }
