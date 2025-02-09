@@ -15,17 +15,19 @@ public class NumericalExpression : Expression
 
     public override void Compile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
     {
-        var prevToken = tokens[startPosition - 1];
         _token = tokens[startPosition];
 
-        if (prevToken.Type == TokenType.BinaryOperation && 
-            (prevToken.Value == "+" || prevToken.Value == "-")
+        if (tokens.Count > 1 && 
+            startPosition > 0 && 
+            tokens[startPosition - 1].Type == TokenType.BinaryOperation && 
+            (tokens[startPosition - 1].Value == "+" || tokens[startPosition - 1].Value == "-")
             )
             if (expressions.Count > 0 &&
                 expressions.Last() is BinaryOperationExpression &&
                 ((BinaryOperationExpression)expressions.Last()).IsUnary
                )
             {
+                var prevToken = tokens[startPosition - 1];
                 expressions.RemoveAt(expressions.Count - 1);
                 _token = new Token(TokenType.Identifier, $"{prevToken.Value}{_token.Value}");
             }
