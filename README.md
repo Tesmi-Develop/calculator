@@ -39,7 +39,7 @@ This project is a console-based calculator that can evaluate not only basic arit
 
 ## 🎮 How to Use
 
-- Enter a mathematical expression, for example:  `(3 + 5) * sin(45) / log(10)`
+- Enter a mathematical expression, for example:  `(3 + 5) * sin(45) / log(10, 2)`
 - Press **Enter** – get the result instantly!
 - Use built-in functions and operations for advanced calculations.
 
@@ -47,8 +47,8 @@ This project is a console-based calculator that can evaluate not only basic arit
 
 Want to contribute? We welcome your ideas and improvements!  
 You can:
-- 🔹 Create an [issue](https://github.com/Tesmi-Develop/calculator/issues) for bugs or suggestions.
-- 🔹 Submit a [pull request](https://github.com/Tesmi-Develop/calculator/pulls) with enhancements.
+- Create an [issue](https://github.com/Tesmi-Develop/calculator/issues) for bugs or suggestions.
+- Submit a [pull request](https://github.com/Tesmi-Develop/calculator/pulls) with enhancements.
 
 ## 📜 License
 
