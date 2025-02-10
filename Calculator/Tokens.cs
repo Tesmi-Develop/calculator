@@ -1,5 +1,3 @@
-using System.Collections.Frozen;
-
 namespace Calculator;
 
 public enum TokenType

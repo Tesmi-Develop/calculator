@@ -4,13 +4,13 @@ namespace Calculator;
 
 public class Lexer
 {
-    private Regex _regex;
+    private readonly Regex _regex;
 
     public Lexer()
     {
         var finalPattern = string.Empty;
 
-        foreach (var (tokenType, pattern) in Tokens.TokenRegexs)
+        foreach (var (_, pattern) in Tokens.TokenRegexs)
         {
             finalPattern += $"{pattern}|";
         }

@@ -1,5 +1,3 @@
-using System.Data;
-
 namespace Calculator;
 
 public abstract class Expression
