@@ -15,6 +15,13 @@ This project is a console-based calculator that can evaluate not only basic arit
     - `log(x)`, `ln(x)`
     - `sqrt(x)`, `pow(x, y)`
     - and more!
+- 🔡 Allows variable assignments for reusable calculations 
+  Example:
+    ```  
+    a = 10  
+    b = 5  
+    a + b * 2  → Result: 20  
+    ```
 
 ## 🛠 Installation and Usage
 
