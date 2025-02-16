@@ -1,13 +1,14 @@
 namespace Calculator.Expressions;
 
-[Expression]
-public class GroupExpression : CalculableExpression
+public abstract class GroupExpression : CalculableExpression
 {
     private List<Expression> _expressions = null!;
+    protected abstract TokenType StartTokenType { get; }
+    protected abstract TokenType EndTokenType { get; }
     
     protected override bool IsValidToken(Token token, List<Expression> expression, List<Token> tokens, int index)
     {
-        return token.Type == TokenType.BracketOpen;
+        return token.Type == StartTokenType;
     }
 
     protected override void OnCompile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
@@ -15,7 +16,7 @@ public class GroupExpression : CalculableExpression
         _expressions = [];
         startPosition++;
         
-        while (tokens[startPosition].Type != TokenType.BracketClose)
+        while (tokens[startPosition].Type != EndTokenType)
         {
             var token = tokens[startPosition];
             var expression = Expression.FindExpression(token, _expressions, tokens, startPosition);
