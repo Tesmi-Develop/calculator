@@ -11,7 +11,7 @@ public class AbsFunctionExpression : FunctionExpression
     protected override double OnCompute(List<double> arguments)
     {
         if (arguments.Count == 0)
-            throw new InvalidOperationException($"At least one argument is required. {name}");
+            throw new InvalidOperationException($"At least one argument is required. {Name}");
         return Math.Abs(arguments[0]);
     }
 }

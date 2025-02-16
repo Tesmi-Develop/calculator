@@ -11,7 +11,7 @@ public class LgFunctionExpression : FunctionExpression
     protected override double OnCompute(List<double> arguments)
     {
         if (arguments.Count < 1)
-            throw new InvalidOperationException($"Invalid number of arguments. ${name}");
+            throw new InvalidOperationException($"Invalid number of arguments. ${Name}");
         return Math.Log10(arguments[0]);
     }
 }

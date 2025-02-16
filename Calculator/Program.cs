@@ -10,13 +10,7 @@ public static class Program
 
             try
             {
-                var lexer = new Lexer();
-                var compiler = new CalculatorCompiler();
-                var tokens = lexer.Parse(input);
-                var expressions = compiler.Compile(tokens);
-                var result = compiler.Compute(expressions);
-            
-                Console.WriteLine(result);
+                Console.WriteLine(Calculator.ComputeExpression(input));
             }
             catch (Exception e)
             {

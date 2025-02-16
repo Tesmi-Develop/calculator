@@ -1,7 +1,7 @@
 namespace Calculator.Expressions;
 
 [Expression]
-public abstract class ConstantExpression : NumericalExpression
+public abstract class ConstantExpression : CalculateExpression
 {
     private int _unaryOperator = 1;
     protected abstract string Name { get; }
@@ -12,7 +12,7 @@ public abstract class ConstantExpression : NumericalExpression
         return token.Type == TokenType.Identifier && token.Value.ToLower() == Name;
     }
 
-    public override void Compile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
+    protected override void OnCompile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
     {
         if (tokens.Count > 1 && 
             startPosition > 0 && 
@@ -30,9 +30,9 @@ public abstract class ConstantExpression : NumericalExpression
             }
     }
 
-    public override void Compile(double number) {}
+    public virtual void Compile(double number) {}
 
-    public override double Compute()
+    protected override double OnCompute()
     {
         return Value * _unaryOperator;
     }

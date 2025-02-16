@@ -1,3 +1,4 @@
+using System.Data;
 using Calculator.Expressions;
 
 namespace Calculator;
@@ -79,13 +80,15 @@ public class CalculatorCompiler
             var expressionIndex = FindHighestBinaryOperation(expressions);
             
             if (expressionIndex == -1 
-                || expressions[expressionIndex - 1] is not NumericalExpression 
-                || expressions[expressionIndex + 1] is not NumericalExpression)
-                throw new InvalidOperationException("Invalid expression");
+                || expressionIndex == 0 
+                || expressionIndex == expressions.Count - 1
+                || expressions[expressionIndex - 1] is not CalculateExpression 
+                || expressions[expressionIndex + 1] is not CalculateExpression)
+                throw new InvalidExpressionException("Invalid expression");
             
             var expression = (BinaryOperationExpression)expressions[expressionIndex];
-            var leftExpression = (NumericalExpression)expressions[expressionIndex - 1];
-            var rightExpression = (NumericalExpression)expressions[expressionIndex + 1];
+            var leftExpression = (CalculateExpression)expressions[expressionIndex - 1];
+            var rightExpression = (CalculateExpression)expressions[expressionIndex + 1];
             
             var result = expression.Compute(leftExpression, rightExpression);
             var wrappedResult = new NumericalExpression();
@@ -96,6 +99,6 @@ public class CalculatorCompiler
             expressions.RemoveAt(expressionIndex - 1);
         }
 
-        return expressions.Count == 1 ? ((NumericalExpression)expressions[0]).Compute() : 0;
+        return expressions.Count == 1 ? ((CalculateExpression)expressions[0]).Compute() : 0;
     }
 }

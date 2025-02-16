@@ -3,7 +3,7 @@ using System.Globalization;
 namespace Calculator.Expressions;
 
 [Expression]
-public class NumericalExpression : Expression
+public class NumericalExpression : CalculateExpression
 {
     private Token _token;
     private double? _value;
@@ -13,24 +13,9 @@ public class NumericalExpression : Expression
         return token.Type == TokenType.Number;
     }
 
-    public override void Compile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
+    protected override void OnCompile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
     {
         _token = tokens[startPosition];
-
-        if (tokens.Count > 1 && 
-            startPosition > 0 && 
-            tokens[startPosition - 1].Type == TokenType.BinaryOperation && 
-            (tokens[startPosition - 1].Value == "+" || tokens[startPosition - 1].Value == "-")
-            )
-            if (expressions.Count > 0 &&
-                expressions.Last() is BinaryOperationExpression &&
-                ((BinaryOperationExpression)expressions.Last()).IsUnary
-               )
-            {
-                var prevToken = tokens[startPosition - 1];
-                expressions.RemoveAt(expressions.Count - 1);
-                _token = new Token(TokenType.Identifier, $"{prevToken.Value}{_token.Value}");
-            }
     }
 
     public virtual void Compile(double number)
@@ -38,7 +23,7 @@ public class NumericalExpression : Expression
         _value = number;
     }
 
-    public virtual double Compute()
+    protected override double OnCompute()
     {
         return _value ?? double.Parse(_token.Value, CultureInfo.InvariantCulture);
     }

@@ -1,7 +1,7 @@
 namespace Calculator.Expressions;
 
 [Expression]
-public class GroupExpression : NumericalExpression
+public class GroupExpression : CalculateExpression
 {
     private List<Expression> _expressions = null!;
     
@@ -10,7 +10,7 @@ public class GroupExpression : NumericalExpression
         return token.Type == TokenType.BracketOpen;
     }
 
-    public override void Compile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
+    protected override void OnCompile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
     {
         _expressions = [];
         startPosition++;
@@ -32,7 +32,7 @@ public class GroupExpression : NumericalExpression
         startPosition++;
     }
 
-    public override double Compute()
+    protected override double OnCompute()
     {
         var compiler = new CalculatorCompiler();
         return compiler.Compute(_expressions);

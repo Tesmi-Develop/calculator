@@ -11,7 +11,7 @@ public class LogFunctionExpression : FunctionExpression
     protected override double OnCompute(List<double> arguments)
     {
         if (arguments.Count < 2)
-            throw new InvalidOperationException($"Invalid number of arguments. ${name}");
+            throw new InvalidOperationException($"Invalid number of arguments. {Name}");
         return Math.Log(arguments[0], arguments[1]);
     }
 }

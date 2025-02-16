@@ -12,7 +12,7 @@ public class PowerBinaryOperationExpression : BinaryOperationExpression
         return token.Value == "**";
     }
 
-    public override double Compute(NumericalExpression left, NumericalExpression right)
+    public override double Compute(CalculateExpression left, CalculateExpression right)
     {
         return Math.Pow(left.Compute(), right.Compute());
     }

@@ -15,7 +15,7 @@ public class AddBinaryOperationExpression : BinaryOperationExpression
         return token.Value == "+";
     }
 
-    public override double Compute(NumericalExpression left, NumericalExpression right)
+    public override double Compute(CalculateExpression left, CalculateExpression right)
     {
         return left.Compute() + right.Compute();
     }

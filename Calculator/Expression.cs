@@ -1,3 +1,5 @@
+using System.Data;
+
 namespace Calculator;
 
 public abstract class Expression
@@ -31,7 +33,7 @@ public abstract class Expression
             }
         }
 
-        return null;
+        throw new InvalidExpressionException("Invalid expression");
     }
 
     protected abstract bool IsValidToken(Token token, List<Expression> expressions);

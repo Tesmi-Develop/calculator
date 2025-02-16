@@ -1,9 +1,9 @@
 namespace Calculator.Expressions;
 
-public abstract class FunctionExpression : NumericalExpression
+public abstract class FunctionExpression : CalculateExpression
 {
     protected List<List<Expression>> Arguments = [];
-    protected string name = string.Empty;
+    protected string Name = string.Empty;
     
     protected abstract bool IsValidToken(string identifier);
     
@@ -15,9 +15,9 @@ public abstract class FunctionExpression : NumericalExpression
         return IsValidToken(token.Value);
     }
     
-    public override void Compile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
+    protected override void OnCompile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
     {
-        name = tokens[startPosition].Value;
+        Name = tokens[startPosition].Value;
         
         var argument = new List<Expression>();
         Arguments = [argument];
@@ -52,7 +52,7 @@ public abstract class FunctionExpression : NumericalExpression
 
     protected abstract double OnCompute(List<double> arguments);
     
-    public override double Compute()
+    protected override double OnCompute()
     {
         var compiler = new CalculatorCompiler();
         var arguments = new List<double>();

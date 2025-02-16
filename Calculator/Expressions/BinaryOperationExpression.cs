@@ -22,5 +22,5 @@ public abstract class BinaryOperationExpression : Expression
         return _IsValidToken(token, expressions);
     }
     
-    public abstract double Compute(NumericalExpression left, NumericalExpression right);
+    public abstract double Compute(CalculateExpression left, CalculateExpression right);
 }
