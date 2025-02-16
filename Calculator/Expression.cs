@@ -22,11 +22,11 @@ public abstract class Expression
         }
     }
 
-    public static Expression? FindExpression(Token token, List<Expression> expressions)
+    public static Expression? FindExpression(Token token, List<Expression> expressions, List<Token> tokens, int index)
     {
         foreach (var expression in Expressions)
         {
-            if (expression.IsValidToken(token, expressions))
+            if (expression.IsValidToken(token, expressions, tokens, index))
             {
                 var newExpression = (Expression)expression.GetType().GetConstructors()[0].Invoke(null);
                 return newExpression;
@@ -36,7 +36,7 @@ public abstract class Expression
         throw new InvalidExpressionException("Invalid expression");
     }
 
-    protected abstract bool IsValidToken(Token token, List<Expression> expressions);
+    protected abstract bool IsValidToken(Token token, List<Expression> expressions, List<Token> tokens, int index);
 
     public abstract void Compile(List<Token> tokens, ref int startPosition, List<Expression> expressions);
 }

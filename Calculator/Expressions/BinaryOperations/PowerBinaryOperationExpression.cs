@@ -12,9 +12,9 @@ public class PowerBinaryOperationExpression : BinaryOperationExpression
         return token.Value == "**";
     }
 
-    public override double Compute(CalculateExpression left, CalculateExpression right)
+    public override double Compute(CalculableExpression left, CalculableExpression right, Dictionary<string, double> variables)
     {
-        return Math.Pow(left.Compute(), right.Compute());
+        return Math.Pow(left.Compute(variables), right.Compute(variables));
     }
 }
 

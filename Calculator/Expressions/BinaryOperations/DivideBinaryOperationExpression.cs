@@ -12,8 +12,8 @@ public class DivideBinaryOperationExpression : BinaryOperationExpression
         return token.Value == "/";
     }
 
-    public override double Compute(CalculateExpression left, CalculateExpression right)
+    public override double Compute(CalculableExpression left, CalculableExpression right, Dictionary<string, double> variables)
     {
-        return left.Compute() / right.Compute();
+        return left.Compute(variables) / right.Compute(variables);
     }
 }

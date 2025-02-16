@@ -34,7 +34,7 @@ public class CalculatorCompiler
         while (index < tokens.Count)
         {
             var token = tokens[index];
-            var expression = Expression.FindExpression(token, expressions);
+            var expression = Expression.FindExpression(token, expressions, tokens, index);
             var oldIndex = index;
             
             expression?.Compile(tokens, ref index, expressions);
@@ -73,7 +73,7 @@ public class CalculatorCompiler
         return result;
     }
     
-    public double Compute(List<Expression> expressions)
+    public double Compute(List<Expression> expressions, Dictionary<string, double> variables)
     {
         while (expressions.Count > 1)
         {
@@ -82,15 +82,15 @@ public class CalculatorCompiler
             if (expressionIndex == -1 
                 || expressionIndex == 0 
                 || expressionIndex == expressions.Count - 1
-                || expressions[expressionIndex - 1] is not CalculateExpression 
-                || expressions[expressionIndex + 1] is not CalculateExpression)
+                || expressions[expressionIndex - 1] is not CalculableExpression 
+                || expressions[expressionIndex + 1] is not CalculableExpression)
                 throw new InvalidExpressionException("Invalid expression");
             
             var expression = (BinaryOperationExpression)expressions[expressionIndex];
-            var leftExpression = (CalculateExpression)expressions[expressionIndex - 1];
-            var rightExpression = (CalculateExpression)expressions[expressionIndex + 1];
+            var leftExpression = (CalculableExpression)expressions[expressionIndex - 1];
+            var rightExpression = (CalculableExpression)expressions[expressionIndex + 1];
             
-            var result = expression.Compute(leftExpression, rightExpression);
+            var result = expression.Compute(leftExpression, rightExpression, variables);
             var wrappedResult = new NumericalExpression();
             wrappedResult.Compile(result);
             
@@ -99,6 +99,6 @@ public class CalculatorCompiler
             expressions.RemoveAt(expressionIndex - 1);
         }
 
-        return expressions.Count == 1 ? ((CalculateExpression)expressions[0]).Compute() : 0;
+        return expressions.Count == 1 ? ((CalculableExpression)expressions[0]).Compute(variables) : 0;
     }
 }

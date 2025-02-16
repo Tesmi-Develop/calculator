@@ -14,7 +14,7 @@ public abstract class BinaryOperationExpression : Expression
     
     protected abstract bool _IsValidToken(Token token, List<Expression> expressions);
     
-    protected override bool IsValidToken(Token token, List<Expression> expressions)
+    protected override bool IsValidToken(Token token, List<Expression> expressions, List<Token> tokens, int index)
     {
         if (token.Type != TokenType.BinaryOperation)
             return false;
@@ -22,5 +22,5 @@ public abstract class BinaryOperationExpression : Expression
         return _IsValidToken(token, expressions);
     }
     
-    public abstract double Compute(CalculateExpression left, CalculateExpression right);
+    public abstract double Compute(CalculableExpression left, CalculableExpression right, Dictionary<string, double> variables);
 }
