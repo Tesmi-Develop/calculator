@@ -114,6 +114,9 @@ public class CalculatorCompiler
             expressions.RemoveAt(expressionIndex + 1);
             expressions.RemoveAt(expressionIndex - 1);
         }
+        
+        if (expressions.Count == 1 && expressions[0] is not CalculableExpression)
+            throw new InvalidExpressionException("Invalid expression");
 
         return expressions.Count == 1 ? ((CalculableExpression)expressions[0]).Compute(variables) : 0;
     }
