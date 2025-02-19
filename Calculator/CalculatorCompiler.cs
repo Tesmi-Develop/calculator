@@ -107,7 +107,7 @@ public class CalculatorCompiler
             var rightExpression = (CalculableExpression)expressions[expressionIndex + 1];
             
             var result = expression.Compute(leftExpression, rightExpression, variables);
-            var wrappedResult = new NumericalExpression();
+            var wrappedResult = new NumericalLiteral();
             wrappedResult.Compile(result);
             
             expressions[expressionIndex] = wrappedResult;

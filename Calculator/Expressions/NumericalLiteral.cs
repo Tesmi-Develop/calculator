@@ -3,7 +3,7 @@ using System.Globalization;
 namespace Calculator.Expressions;
 
 [Expression]
-public class NumericalExpression : CalculableExpression
+public class NumericalLiteral : CalculableExpression
 {
     private Token _token;
     private double? _value;

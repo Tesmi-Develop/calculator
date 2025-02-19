@@ -2,17 +2,14 @@ namespace Calculator.Expressions;
 
 public abstract class FunctionExpression : CalculableExpression
 {
-    protected List<List<Expression>> Arguments = [];
+    private List<List<Expression>> Arguments = [];
     protected string Name = string.Empty;
     
     protected abstract bool IsValidToken(string identifier);
     
     protected override bool IsValidToken(Token token, List<Expression> expression, List<Token> tokens, int index)
     {
-        if (token.Type != TokenType.Identifier)
-            return false;
-
-        return IsValidToken(token.Value);
+        return token.Type == TokenType.Identifier && IsValidToken(token.Value);
     }
     
     protected override void OnCompile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
