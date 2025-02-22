@@ -5,44 +5,9 @@ namespace Calculator;
 
 public class CalculatorCompiler
 {
-    private void ValidateBrackets(List<Token> tokens)
-    {
-        var depth = 0;
-
-        foreach (var token in tokens)
-        {
-            if (token.Type == TokenType.BracketOpen)
-                depth++;
-            
-            if (token.Type == TokenType.BracketClose)
-                depth--;
-            
-            if (depth < 0)
-                throw new InvalidOperationException("Invalid brackets");
-        }
-
-        if (depth != 0)
-            throw new InvalidOperationException("Invalid brackets");
-    }
-    
-    private void ValidateModules(List<Token> tokens)
-    {
-        var count = 0;
-
-        foreach (var token in tokens)
-        {
-            if (token.Type == TokenType.VerticalBar)
-                count++;
-        }
-
-        if (count % 2 != 0)
-            throw new InvalidOperationException("Invalid modules");
-    }
-    
     public List<Expression> Compile(List<Token> tokens)
     {
-        ValidateBrackets(tokens);
-        ValidateModules(tokens);
+        Expression.InvokePreCompile(tokens);
         
         var expressions = new List<Expression>();
         var index = 0;

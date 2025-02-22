@@ -36,6 +36,16 @@ public abstract class Expression
         throw new InvalidExpressionException("Invalid expression");
     }
 
+    public static void InvokePreCompile(List<Token> tokens)
+    {
+        foreach (var expression in Expressions)
+        {
+            expression.PreCompile(tokens);
+        }
+    }
+    
+    public virtual void PreCompile(List<Token> tokens) {} 
+
     protected abstract bool IsValidToken(Token token, List<Expression> expressions, List<Token> tokens, int index);
 
     public abstract void Compile(List<Token> tokens, ref int startPosition, List<Expression> expressions);

@@ -11,12 +11,18 @@ public abstract class GroupExpression : CalculableExpression
         return token.Type == StartTokenType;
     }
 
+    protected virtual bool IsContinuedToken(Token token, List<Expression> expression, List<Token> tokens, int index)
+    {
+        return false;
+    }
+
     protected override void OnCompile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
     {
         _expressions = [];
         startPosition++;
         
-        while (tokens[startPosition].Type != EndTokenType)
+        
+        while (tokens[startPosition].Type != EndTokenType || IsContinuedToken(tokens[startPosition], expressions, tokens, startPosition))
         {
             var token = tokens[startPosition];
             var expression = Expression.FindExpression(token, _expressions, tokens, startPosition);
