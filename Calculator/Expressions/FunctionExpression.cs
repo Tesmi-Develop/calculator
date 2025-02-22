@@ -42,12 +42,11 @@ public abstract class FunctionExpression : CalculableExpression
     
     protected override double OnCompute(Dictionary<string, double> variables)
     {
-        var compiler = new CalculatorCompiler();
         var arguments = new List<double>();
 
         foreach (var argument in Arguments)
         {
-            arguments.Add(compiler.Compute(argument, variables));
+            arguments.Add(CalculatorCompiler.Instance.Compute(argument, variables));
         }
 
         return OnCompute(arguments);

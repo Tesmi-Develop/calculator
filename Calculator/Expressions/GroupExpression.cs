@@ -31,7 +31,6 @@ public abstract class GroupExpression : CalculableExpression
 
     protected override double OnCompute(Dictionary<string, double> variables)
     {
-        var compiler = new CalculatorCompiler();
-        return compiler.Compute(_expressions, variables);
+        return CalculatorCompiler.Instance.Compute(_expressions, variables);
     }
 }
