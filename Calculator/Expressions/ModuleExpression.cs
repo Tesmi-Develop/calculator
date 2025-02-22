@@ -8,7 +8,7 @@ public class ModuleExpression : GroupExpression
     protected override TokenType StartTokenType { get; } = TokenType.VerticalBar;
     protected override TokenType EndTokenType { get; } = TokenType.VerticalBar;
 
-    protected override bool IsContinuedToken(Token token, List<Expression> expression, List<Token> tokens, int index)
+    protected override bool IsContinueToken(Token token, List<Expression> expression, List<Token> tokens, int index)
     {
         return _depth != _maxDepth;
     }

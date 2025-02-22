@@ -11,7 +11,7 @@ public abstract class GroupExpression : CalculableExpression
         return token.Type == StartTokenType;
     }
 
-    protected virtual bool IsContinuedToken(Token token, List<Expression> expression, List<Token> tokens, int index)
+    protected virtual bool IsContinueToken(Token token, List<Expression> expression, List<Token> tokens, int index)
     {
         return false;
     }
@@ -21,7 +21,7 @@ public abstract class GroupExpression : CalculableExpression
         _expressions = [];
         index++;
         
-        while (tokens[index].Type != EndTokenType || IsContinuedToken(tokens[index], expressions, tokens, index))
+        while (tokens[index].Type != EndTokenType || IsContinueToken(tokens[index], expressions, tokens, index))
         {
             CalculatorCompiler.Instance.ProcessToken(tokens[index], tokens, _expressions, ref index);
         }
