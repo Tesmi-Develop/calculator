@@ -8,15 +8,7 @@ public class CalculatorCompiler
     private static CalculatorCompiler? _instance;
     public static CalculatorCompiler Instance
     {
-        get
-        {
-            if (_instance is null)
-            {
-                _instance = new CalculatorCompiler();
-            }
-
-            return _instance;
-        }
+        get { return _instance ??= new CalculatorCompiler(); }
     }
 
     public void ProcessToken(Token token, List<Token> tokens, List<Expression> expressions, ref int index)
