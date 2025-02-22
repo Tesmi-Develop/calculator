@@ -13,9 +13,9 @@ public class NumericalLiteral : CalculableExpression
         return token.Type == TokenType.Number;
     }
 
-    protected override void OnCompile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
+    protected override void OnCompile(List<Token> tokens, ref int index, List<Expression> expressions)
     {
-        _token = tokens[startPosition];
+        _token = tokens[index];
     }
 
     public void Compile(double number)

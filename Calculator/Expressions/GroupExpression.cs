@@ -16,27 +16,17 @@ public abstract class GroupExpression : CalculableExpression
         return false;
     }
 
-    protected override void OnCompile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
+    protected override void OnCompile(List<Token> tokens, ref int index, List<Expression> expressions)
     {
         _expressions = [];
-        startPosition++;
+        index++;
         
-        
-        while (tokens[startPosition].Type != EndTokenType || IsContinuedToken(tokens[startPosition], expressions, tokens, startPosition))
+        while (tokens[index].Type != EndTokenType || IsContinuedToken(tokens[index], expressions, tokens, index))
         {
-            var token = tokens[startPosition];
-            var expression = Expression.FindExpression(token, _expressions, tokens, startPosition);
-            var oldIndex = startPosition;
-            
-            expression?.Compile(tokens, ref startPosition, _expressions);
-            if (expression != null) 
-                _expressions.Add(expression);
-
-            if (startPosition == oldIndex)
-                startPosition++;
+            CalculatorCompiler.Instance.ProcessToken(tokens[index], tokens, _expressions, ref index);
         }
         
-        startPosition++;
+        index++;
     }
 
     protected override double OnCompute(Dictionary<string, double> variables)

@@ -11,7 +11,7 @@ public abstract class ConstantExpression : CalculableExpression
         return token.Type == TokenType.Identifier && token.Value.ToLower() == Name;
     }
 
-    protected override void OnCompile(List<Token> tokens, ref int startPosition, List<Expression> expressions) {}
+    protected override void OnCompile(List<Token> tokens, ref int index, List<Expression> expressions) {}
 
     protected override double OnCompute(Dictionary<string, double> variables)
     {

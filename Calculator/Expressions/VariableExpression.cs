@@ -13,9 +13,9 @@ public class VariableExpression : CalculableExpression
         return tokens.Count == index + 1 || (tokens[index + 1].Type != TokenType.BracketOpen && tokens[index + 1].Type != TokenType.BracketClose);
     }
 
-    protected override void OnCompile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
+    protected override void OnCompile(List<Token> tokens, ref int index, List<Expression> expressions)
     {
-        _token = tokens[startPosition];
+        _token = tokens[index];
     }
 
     protected override double OnCompute(Dictionary<string, double> variables)

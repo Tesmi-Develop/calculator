@@ -26,7 +26,7 @@ public abstract class CalculableExpression : Expression
         OnCompile(tokens, ref startPosition, expressions);
     }
 
-    protected abstract void OnCompile(List<Token> tokens, ref int startPosition, List<Expression> expressions);
+    protected abstract void OnCompile(List<Token> tokens, ref int index, List<Expression> expressions);
     
     public double Compute(Dictionary<string, double> variables)
     {

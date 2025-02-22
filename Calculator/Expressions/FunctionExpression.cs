@@ -12,39 +12,30 @@ public abstract class FunctionExpression : CalculableExpression
         return token.Type == TokenType.Identifier && IsValidToken(token.Value);
     }
     
-    protected override void OnCompile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
+    protected override void OnCompile(List<Token> tokens, ref int index, List<Expression> expressions)
     {
-        Name = tokens[startPosition].Value;
+        Name = tokens[index].Value;
         
         var argument = new List<Expression>();
         Arguments = [argument];
-        startPosition += 2;
+        index += 2;
         
-        if (tokens[startPosition - 1].Type != TokenType.BracketOpen)
-            throw new InvalidOperationException($"Expected '(', ${tokens[startPosition - 2].Value}");
+        if (tokens[index - 1].Type != TokenType.BracketOpen)
+            throw new InvalidOperationException($"Expected '(', ${tokens[index - 2].Value}");
         
-        while (tokens[startPosition].Type != TokenType.BracketClose)
+        while (tokens[index].Type != TokenType.BracketClose)
         {
-            var token = tokens[startPosition];
-            var expression = Expression.FindExpression(token, argument, tokens, startPosition);
-            var oldIndex = startPosition;
-            
-            expression?.Compile(tokens, ref startPosition, expressions);
-            if (expression != null) 
-                argument.Add(expression);
+            CalculatorCompiler.Instance.ProcessToken(tokens[index], tokens, argument, ref index);
 
-            if (startPosition == oldIndex)
-                startPosition++;
-
-            if (tokens[startPosition].Type != TokenType.Comma) 
+            if (tokens[index].Type != TokenType.Comma) 
                 continue;
             
             argument = [];
             Arguments.Add(argument);
-            startPosition++;
+            index++;
         }
         
-        startPosition++;
+        index++;
     }
 
     protected abstract double OnCompute(List<double> arguments);

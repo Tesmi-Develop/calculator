@@ -13,10 +13,10 @@ public class ModuleExpression : GroupExpression
         return _depth != _maxDepth;
     }
 
-    protected override void OnCompile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
+    protected override void OnCompile(List<Token> tokens, ref int index, List<Expression> expressions)
     {
         _depth++;
-        base.OnCompile(tokens, ref startPosition, expressions);
+        base.OnCompile(tokens, ref index, expressions);
     }
 
     public override void PreCompile(List<Token> tokens)
