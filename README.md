@@ -13,7 +13,7 @@ This project is a console-based calculator that can evaluate not only basic arit
 - 📈 Supports mathematical functions:
     - `sin(x)`, `cos(x)`, `tan(x)`
     - `log(x)`, `ln(x)`
-    - `sqrt(x)`, `pow(x, y)`
+    - `sqrt(x)`, `max(x, y, ...)`
     - and more!
 - 🔡 Allows variable assignments for reusable calculations example:
     ```  
