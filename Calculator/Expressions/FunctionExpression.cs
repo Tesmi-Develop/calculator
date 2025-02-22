@@ -2,7 +2,7 @@ namespace Calculator.Expressions;
 
 public abstract class FunctionExpression : CalculableExpression
 {
-    private List<List<Expression>> Arguments = [];
+    private List<List<Expression>> _arguments = [];
     protected string Name = string.Empty;
     
     protected abstract bool IsValidToken(string identifier);
@@ -17,7 +17,7 @@ public abstract class FunctionExpression : CalculableExpression
         Name = tokens[index].Value;
         
         var argument = new List<Expression>();
-        Arguments = [argument];
+        _arguments = [argument];
         index += 2;
         
         if (tokens[index - 1].Type != TokenType.BracketOpen)
@@ -31,7 +31,7 @@ public abstract class FunctionExpression : CalculableExpression
                 continue;
             
             argument = [];
-            Arguments.Add(argument);
+            _arguments.Add(argument);
             index++;
         }
         
@@ -44,7 +44,7 @@ public abstract class FunctionExpression : CalculableExpression
     {
         var arguments = new List<double>();
 
-        foreach (var argument in Arguments)
+        foreach (var argument in _arguments)
         {
             arguments.Add(CalculatorCompiler.Instance.Compute(argument, variables));
         }
