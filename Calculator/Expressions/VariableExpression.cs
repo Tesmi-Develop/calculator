@@ -2,6 +2,7 @@ using System.Globalization;
 
 namespace Calculator.Expressions;
 
+
 [Expression]
 public class VariableExpression : CalculableExpression
 {
@@ -20,7 +21,7 @@ public class VariableExpression : CalculableExpression
 
     protected override double OnCompute(Dictionary<string, double> variables)
     {
-        if (!variables.TryGetValue(_token.Value, out double result))
+        if (!variables.TryGetValue(_token.Value, out var result))
             throw new Exception($"Variable {_token.Value} is not defined");
         return result;
     }

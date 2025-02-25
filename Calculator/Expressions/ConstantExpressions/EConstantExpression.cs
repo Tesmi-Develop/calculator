@@ -1,5 +1,6 @@
 namespace Calculator.Expressions.ConstantExpressions;
 
+[Expression]
 public class EConstantExpression : ConstantExpression
 {
     protected override string Name => "e";

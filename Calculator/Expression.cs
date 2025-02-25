@@ -5,6 +5,8 @@ namespace Calculator;
 public abstract class Expression
 {
     private static readonly List<Expression> Expressions = [];
+
+    protected virtual int Priority { get; set; } = 1;
     
     static Expression()
     {
@@ -20,6 +22,8 @@ public abstract class Expression
                 }
             }
         }
+        
+        Expressions.Sort(((expression, expression1) => expression1.Priority - expression.Priority));
     }
 
     public static Expression? FindExpression(Token token, List<Expression> expressions, List<Token> tokens, int index)

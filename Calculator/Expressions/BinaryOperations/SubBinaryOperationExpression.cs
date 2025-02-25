@@ -3,7 +3,7 @@ namespace Calculator.Expressions.BinaryOperations;
 [Expression]
 public class SubBinaryOperationExpression : BinaryOperationExpression
 {
-    public override BinaryOperationPriority Priority => BinaryOperationPriority.Lowest;
+    public override BinaryOperationPriority PriorityOperation => BinaryOperationPriority.Lowest;
 
     public override void Compile(List<Token> tokens, ref int startPosition, List<Expression> expressions)
     {

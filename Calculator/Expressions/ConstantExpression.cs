@@ -5,6 +5,7 @@ public abstract class ConstantExpression : CalculableExpression
 {
     protected abstract string Name { get; }
     protected abstract double Value { get; }
+    protected override int Priority => 2;
     
     protected override bool IsValidToken(Token token, List<Expression> expression, List<Token> tokens, int index)
     {

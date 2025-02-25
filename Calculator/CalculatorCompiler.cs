@@ -50,11 +50,11 @@ public class CalculatorCompiler
             if (expression is not BinaryOperationExpression operation)
                 continue;
 
-            if (operation.Priority <= priority && result != -1 && operation.Priority != BinaryOperationPriority.Highest)
+            if (operation.PriorityOperation <= priority && result != -1 && operation.PriorityOperation != BinaryOperationPriority.Highest)
                 continue;
             
             result = i;
-            priority = operation.Priority;
+            priority = operation.PriorityOperation;
         }
 
         return result;

@@ -9,7 +9,7 @@ public enum BinaryOperationPriority
 
 public abstract class BinaryOperationExpression : Expression
 {
-    public abstract BinaryOperationPriority Priority { get; }
+    public abstract BinaryOperationPriority PriorityOperation { get; }
     public bool IsUnary { get; protected set; } = false;
     
     protected abstract bool _IsValidToken(Token token, List<Expression> expressions);
