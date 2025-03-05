@@ -25,7 +25,7 @@ public abstract class FunctionExpression : CalculableExpression
         
         while (tokens[index].Type != TokenType.BracketClose)
         {
-            CalculatorCompiler.Instance.ProcessToken(tokens[index], tokens, argument, ref index);
+            CalculatorCompiler.ProcessToken(tokens[index], tokens, argument, ref index);
 
             if (tokens[index].Type != TokenType.Comma) 
                 continue;
@@ -46,7 +46,7 @@ public abstract class FunctionExpression : CalculableExpression
 
         foreach (var argument in _arguments)
         {
-            arguments.Add(CalculatorCompiler.Instance.Compute(argument, variables));
+            arguments.Add(CalculatorCompiler.Compute(argument, variables));
         }
 
         return OnCompute(arguments);

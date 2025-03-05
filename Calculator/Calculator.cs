@@ -13,10 +13,9 @@ public static class Calculator
     public static double ComputeExpression(string input, Dictionary<string, double> variables)
     {
         var lexer = new Lexer();
-        var compiler = new CalculatorCompiler();
         
         var tokens = lexer.Parse(input);
-        var expressions = compiler.Compile(tokens);
-        return compiler.Compute(expressions, variables);
+        var expressions = CalculatorCompiler.Compile(tokens);
+        return CalculatorCompiler.Compute(expressions, variables);
     }
 }

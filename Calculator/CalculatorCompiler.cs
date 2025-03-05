@@ -3,15 +3,9 @@ using Calculator.Expressions;
 
 namespace Calculator;
 
-public class CalculatorCompiler
+public static class CalculatorCompiler
 {
-    private static CalculatorCompiler? _instance;
-    public static CalculatorCompiler Instance
-    {
-        get { return _instance ??= new CalculatorCompiler(); }
-    }
-
-    public void ProcessToken(Token token, List<Token> tokens, List<Expression> expressions, ref int index)
+    public static void ProcessToken(Token token, List<Token> tokens, List<Expression> expressions, ref int index)
     {
         var expression = Expression.FindExpression(token, expressions, tokens, index);
         var oldIndex = index;
@@ -23,7 +17,7 @@ public class CalculatorCompiler
         if (index == oldIndex)
             index++;
     }
-    public List<Expression> Compile(List<Token> tokens)
+    public static List<Expression> Compile(List<Token> tokens)
     {
         Expression.InvokePreCompile(tokens);
         
@@ -38,7 +32,7 @@ public class CalculatorCompiler
         return expressions;
     }
 
-    private int FindHighestBinaryOperation(List<Expression> expressions)
+    private static int FindHighestBinaryOperation(List<Expression> expressions)
     {
         var result = -1;
         var priority = BinaryOperationPriority.Lowest;
@@ -60,7 +54,7 @@ public class CalculatorCompiler
         return result;
     }
     
-    public double Compute(List<Expression> expressions, Dictionary<string, double> variables)
+    public static double Compute(List<Expression> expressions, Dictionary<string, double> variables)
     {
         while (expressions.Count > 1)
         {

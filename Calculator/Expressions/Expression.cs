@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace Calculator;
+namespace Calculator.Expressions;
 
 public abstract class Expression
 {

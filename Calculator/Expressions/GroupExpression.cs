@@ -23,7 +23,7 @@ public abstract class GroupExpression : CalculableExpression
         
         while (tokens[index].Type != EndTokenType || IsContinueToken(tokens[index], expressions, tokens, index))
         {
-            CalculatorCompiler.Instance.ProcessToken(tokens[index], tokens, _expressions, ref index);
+            CalculatorCompiler.ProcessToken(tokens[index], tokens, _expressions, ref index);
         }
         
         index++;
@@ -31,6 +31,6 @@ public abstract class GroupExpression : CalculableExpression
 
     protected override double OnCompute(Dictionary<string, double> variables)
     {
-        return CalculatorCompiler.Instance.Compute(_expressions, variables);
+        return CalculatorCompiler.Compute(_expressions, variables);
     }
 }
