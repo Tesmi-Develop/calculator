@@ -14,6 +14,7 @@ This project is a console-based calculator that can evaluate not only basic arit
     - `sin(x)`, `cos(x)`, `tan(x)`
     - `log(x)`, `ln(x)`
     - `sqrt(x)`, `max(x, y, ...)`
+    - `x!` for calculating factorials (e.g., `5!` → Result: `120`)
     - and more!
 - 🔡 Allows variable assignments for reusable calculations example:
     ```  

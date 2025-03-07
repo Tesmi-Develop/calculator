@@ -20,7 +20,7 @@ public static class Tokens
         { TokenType.BracketOpen, @"\("},
         { TokenType.BracketClose, @"\)"},
         { TokenType.VerticalBar, @"\|"},
-        { TokenType.Identifier, @"\b[a-zA-Z_][a-zA-Z0-9_]*"},
+        { TokenType.Identifier, @"\b[a-zA-Z_!][a-zA-Z0-9_!]*\b|!"},
         { TokenType.Comma, @"," }
     };
 }
