@@ -10,8 +10,7 @@ public class VariableExpression : CalculableExpression
     
     protected override bool IsValidToken(Token token, List<Expression> expression, List<Token> tokens, int index)
     {
-        if (token.Type != TokenType.Identifier) return false;
-        return tokens.Count == index + 1 || (tokens[index + 1].Type != TokenType.BracketOpen && tokens[index + 1].Type != TokenType.BracketClose);
+        return token.Type == TokenType.Identifier;
     }
 
     protected override void OnCompile(List<Token> tokens, ref int index, List<Expression> expressions)

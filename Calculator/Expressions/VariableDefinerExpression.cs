@@ -5,8 +5,9 @@ namespace Calculator.Expressions;
 [Expression]
 public class VariableDefinerExpression : PreProcessorExpression
 {
-    private VariableExpression _variable = null!;
+    public VariableExpression Variable { get; private set; } = null!;
     private CalculableExpression _calculableExpression = null!;
+ 
     protected override bool IsValidToken(Token token, List<Expression> expressions, List<Token> tokens, int index)
     {
         return token.Type == TokenType.Equal;
@@ -17,7 +18,7 @@ public class VariableDefinerExpression : PreProcessorExpression
         if (expressions.Count == 0 || expressions[^1] is not VariableExpression)
             throw new InvalidExpressionException("Expected variable expression");
         
-        _variable = (VariableExpression)expressions[^1];
+        Variable = (VariableExpression)expressions[^1];
         expressions.RemoveAt(expressions.Count - 1);
 
         startPosition++;
@@ -34,6 +35,6 @@ public class VariableDefinerExpression : PreProcessorExpression
 
     public override void Run(Dictionary<string, double> variables)
     {
-        variables[_variable.Token.Value] = _calculableExpression.Compute(variables);
+        variables[Variable.Token.Value] = _calculableExpression.Compute(variables);
     }
 }
