@@ -53,9 +53,25 @@ public static class CalculatorCompiler
 
         return result;
     }
+
+    private static void ExecutePreProcessors(List<Expression> expressions, Dictionary<string, double> variables)
+    {
+        for (int i = 0; i < expressions.Count; i++)
+        {
+            var expression = expressions[i];
+            if (expression is not PreProcessorExpression preProcessorExpression)
+                continue;
+            
+            preProcessorExpression.Run(variables);
+            expressions.RemoveAt(i);
+            i--;
+        }
+    }
     
     public static double Compute(List<Expression> expressions, Dictionary<string, double> variables)
     {
+        ExecutePreProcessors(expressions, variables);
+        
         while (expressions.Count > 1)
         {
             var expressionIndex = FindHighestBinaryOperation(expressions);
