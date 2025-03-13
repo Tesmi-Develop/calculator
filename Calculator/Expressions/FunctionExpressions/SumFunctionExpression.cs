@@ -25,7 +25,7 @@ public class SumFunctionExpression : FunctionExpression
 
     protected override double OnCompute(List<double> arguments)
     {
-        throw new NotImplementedException();
+        return 0;
     }
 
     protected override double OnCompute(Dictionary<string, double> variables)
