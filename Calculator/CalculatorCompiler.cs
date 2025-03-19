@@ -92,10 +92,7 @@ public static class CalculatorCompiler
                 continue;
             }
 
-            if (expression is not BinaryOperationExpression operation)
-                throw new InvalidExpressionException("Invalid expression");
-
-            if (stack.Pop() is not CalculableExpression right || stack.Pop() is not CalculableExpression left)
+            if (expression is not BinaryOperationExpression operation || stack.Pop() is not CalculableExpression right || stack.Pop() is not CalculableExpression left)
                 throw new InvalidExpressionException("Invalid expression");
             
             var result = new NumericalLiteral();
