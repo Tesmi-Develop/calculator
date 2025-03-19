@@ -4,6 +4,7 @@ namespace Calculator.Expressions.BinaryOperations;
 public class PowerBinaryOperationExpression : BinaryOperationExpression
 {
     public override BinaryOperationPriority PriorityOperation => BinaryOperationPriority.Highest;
+    public override BinaryOperationAssociativity Associativity => BinaryOperationAssociativity.Right;
     
     public override void Compile(List<Token> tokens, ref int startPosition, List<Expression> expressions) {}
 

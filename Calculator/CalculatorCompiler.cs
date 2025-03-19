@@ -56,7 +56,7 @@ public static class CalculatorCompiler
 
     private static void ExecutePreProcessors(List<Expression> expressions, Dictionary<string, double> variables)
     {
-        for (int i = 0; i < expressions.Count; i++)
+        for (var i = 0; i < expressions.Count; i++)
         {
             var expression = expressions[i];
             if (expression is not PreProcessorExpression preProcessorExpression)
@@ -67,38 +67,67 @@ public static class CalculatorCompiler
             i--;
         }
     }
+
+    private static List<Expression> ShuntingYard(List<Expression> expressions)
+    {
+        var output = new List<Expression>();
+        var stack = new Stack<BinaryOperationExpression>();
+
+        foreach (var expression in expressions)
+        {
+            if (expression is CalculableExpression)
+            {
+                output.Add(expression);
+                continue;
+            }
+            
+            if (expression is not BinaryOperationExpression operation)
+                continue;
+
+            while (stack.Count > 0 && 
+                   (operation.Associativity == BinaryOperationAssociativity.Left ? 
+                       stack.Peek().PriorityOperation >= operation.PriorityOperation : 
+                       stack.Peek().PriorityOperation > operation.PriorityOperation))
+                output.Add(stack.Pop());
+            
+            stack.Push(operation);
+        }
+        
+        while (stack.Count > 0)
+            output.Add(stack.Pop());
+
+        return output;
+    }
     
     public static double Compute(List<Expression> expressions, Dictionary<string, double> variables)
     {
         ExecutePreProcessors(expressions, variables);
         
-        while (expressions.Count > 1)
+        var sortedExpressions = ShuntingYard(expressions);
+        var stack = new Stack<Expression>();
+
+        foreach (var expression in sortedExpressions)
         {
-            var expressionIndex = FindHighestBinaryOperation(expressions);
-            
-            if (expressionIndex == -1 
-                || expressionIndex == 0 
-                || expressionIndex == expressions.Count - 1
-                || expressions[expressionIndex - 1] is not CalculableExpression 
-                || expressions[expressionIndex + 1] is not CalculableExpression)
+            if (expression is CalculableExpression)
+            {
+                stack.Push(expression);
+                continue;
+            }
+
+            if (expression is not BinaryOperationExpression operation)
+                throw new InvalidExpressionException("Invalid expression");
+
+            if (stack.Pop() is not CalculableExpression right || stack.Pop() is not CalculableExpression left)
                 throw new InvalidExpressionException("Invalid expression");
             
-            var expression = (BinaryOperationExpression)expressions[expressionIndex];
-            var leftExpression = (CalculableExpression)expressions[expressionIndex - 1];
-            var rightExpression = (CalculableExpression)expressions[expressionIndex + 1];
-            
-            var result = expression.Compute(leftExpression, rightExpression, variables);
-            var wrappedResult = new NumericalLiteral();
-            wrappedResult.Compile(result);
-            
-            expressions[expressionIndex] = wrappedResult;
-            expressions.RemoveAt(expressionIndex + 1);
-            expressions.RemoveAt(expressionIndex - 1);
+            var result = new NumericalLiteral();
+            result.Compile(operation.Compute(left, right, variables));
+            stack.Push(result);
         }
         
-        if (expressions.Count == 1 && expressions[0] is not CalculableExpression)
+        if (stack.Count == 1 && stack.Peek() is not CalculableExpression)
             throw new InvalidExpressionException("Invalid expression");
 
-        return expressions.Count == 1 ? ((CalculableExpression)expressions[0]).Compute(variables) : 0;
+        return stack.Count == 1 ? ((CalculableExpression)stack.Peek()).Compute(variables) : 0;
     }
 }
