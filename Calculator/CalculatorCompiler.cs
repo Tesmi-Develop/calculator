@@ -32,28 +32,6 @@ public static class CalculatorCompiler
         return expressions;
     }
 
-    private static int FindHighestBinaryOperation(List<Expression> expressions)
-    {
-        var result = -1;
-        var priority = BinaryOperationPriority.Lowest;
-        
-        for (var i = 0; i < expressions.Count; i++)
-        {
-            var expression = expressions[i];
-            
-            if (expression is not BinaryOperationExpression operation)
-                continue;
-
-            if (operation.PriorityOperation <= priority && result != -1 && operation.PriorityOperation != BinaryOperationPriority.Highest)
-                continue;
-            
-            result = i;
-            priority = operation.PriorityOperation;
-        }
-
-        return result;
-    }
-
     private static void ExecutePreProcessors(List<Expression> expressions, Dictionary<string, double> variables)
     {
         for (var i = 0; i < expressions.Count; i++)

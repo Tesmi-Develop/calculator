@@ -2,11 +2,11 @@ using System.Text.RegularExpressions;
 
 namespace Calculator;
 
-public class Lexer
+public static class Lexer
 {
-    private readonly Regex _regex;
+    private static readonly Regex Regex;
 
-    public Lexer()
+    static Lexer()
     {
         var finalPattern = string.Empty;
 
@@ -15,14 +15,14 @@ public class Lexer
             finalPattern += $"{pattern}|";
         }
         
-        _regex = new Regex(finalPattern[..^1]);
+        Regex = new Regex(finalPattern[..^1]);
     }
     
-    public List<Token> Parse(string input)
+    public static List<Token> Parse(string input)
     {
         var tokens = new List<Token>();
 
-        foreach (Match match in _regex.Matches(input))
+        foreach (Match match in Regex.Matches(input))
         {
             TokenType? foundTokenType = null;
             
